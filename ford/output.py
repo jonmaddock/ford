@@ -105,6 +105,8 @@ class Documentation(object):
                 self.lists.append(AbsIntList(data,project))
             if len(project.blockdata) > 1:
                 self.lists.append(BlockList(data,project))
+            # Always make a list of module-level variables in the project
+            self.lists.append(VarList(data,project))
             if pagetree:
                 for item in pagetree:
                     self.pagetree.append(PagetreePage(data,project,item))
@@ -391,6 +393,20 @@ class BlockList(BasePage):
         return template.render(data,project=proj)
 
 
+class VarList(BasePage):
+    @property
+    def outfile(self):
+        return os.path.join(self.out_dir,'lists','variables.html')
+
+    def render(self,data,proj,obj):
+        if data['relative']:
+            data['project_url'] = '..'
+            ford.sourceform.set_base_url('..')
+            ford.pagetree.set_base_url('..')
+        template = env.get_template('vars_list.html')
+        return template.render(data,project=proj)
+
+        
 class DocPage(BasePage):
     """
     Abstract class to be inherited by all pages for items in the code.

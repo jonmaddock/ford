@@ -48,3 +48,18 @@
             !! do some stuff, ensure proper bounds etc.
           end subroutine linalg
         end program ford_test_program
+
+        ! Modules for testing the documentation of module-level variables
+        module my_module
+          integer :: module_var1
+          !! Here's my module-level var
+          integer :: module_var2
+          !! Here's another module-level var
+        end module my_module
+
+        module my_module2
+          integer :: module_var3
+          !! The third module-level var
+          integer :: module_var4
+          !! Module-level var number 4
+        end module my_module2

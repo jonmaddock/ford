@@ -119,6 +119,8 @@
 {% elif project.programs|length == 1 %}
 <li class="visible-xs hidden-sm visible-lg"><a href="{{ project.programs[0].get_url() }}">Program</a></li>
 {% endif %}
+<!-- Always display module-level variables link -->
+<li class="visible-xs hidden-sm visible-lg"><a href="{{ project_url }}/lists/variables.html">Variables</a></li>
           </ul>
         {% if search|lower == 'true' %}
         <form action="{{ project_url }}/search.html" class="navbar-form navbar-right" role="search">
