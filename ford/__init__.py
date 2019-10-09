@@ -44,6 +44,9 @@ if (sys.version_info[0] > 2):
 else:
     from StringIO import StringIO
 
+# Need to link to Process for dict creation
+import create_dicts
+
 __appname__ = "FORD"
 __author__ = "Chris MacMackin"
 __credits__ = ["Balint Aradi", "Iain Barrass", "Izaak Beekman",
@@ -333,6 +336,9 @@ def initialize():
     md.Meta = {}
     return (proj_data, proj_docs, md)
 
+def export_project(project):
+    # Output project object to make dicts in Process
+    create_dicts.create_dicts(project)
 
 def main(proj_data,proj_docs,md):
     """
@@ -379,6 +385,10 @@ def main(proj_data,proj_docs,md):
     docs = ford.output.Documentation(proj_data,proj_docs_,project,page_tree)
     docs.writeout()
     print('')
+
+    # Pass the project object out for use in making dicts in Process
+    export_project(project)
+    
     return 0
 
 
