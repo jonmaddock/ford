@@ -45,7 +45,6 @@ else:
     from StringIO import StringIO
 
 # Need to link to Process for dict creation
-sys.path.append("/builds/process/process/utilities")
 import create_dicts
 
 __appname__ = "FORD"
