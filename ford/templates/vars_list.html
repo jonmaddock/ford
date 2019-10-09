@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}
+Module-level Variables &ndash; {{ project }}
+{% endblock %}
+{% block body %}
+      <div class="row">
+        <div class="col-lg-12" id='text'>
+			<h1>Module-level Variables</h1>
+			{% for module in project.modules %}
+				{% if module.variables|length > 0 %}
+					<table class="table table-striped">
+						<h3>{{ module.name }}</h3>
+						<thead><tr><th>Variable name</th><th>Type</th><th>Initial</th><th>Description</th></tr></thead>
+						<tbody>
+						{% for var in module.variables %}
+							<tr><td>{{ var.name }}</td><td>{{ var.vartype }}</td><td>{{ var.initial }}</td><td>{{ var.doc }}</td></tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
+			{% endfor %}
+        </div>
+      </div>
+{% endblock %}
