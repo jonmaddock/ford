@@ -44,8 +44,9 @@ if (sys.version_info[0] > 2):
 else:
     from StringIO import StringIO
 
-# Need to link to Process for dict creation
+# Need to link to Process for dict creation and variable descriptions
 import create_dicts
+import vardes
 
 __appname__ = "FORD"
 __author__ = "Chris MacMackin"
@@ -337,8 +338,9 @@ def initialize():
     return (proj_data, proj_docs, md)
 
 def export_project(project):
-    # Output project object to make dicts in Process
+    # Output project object to make dicts and variable descriptions in Process
     create_dicts.create_dicts(project)
+    vardes.create_vardes(project)
 
 def main(proj_data,proj_docs,md):
     """
