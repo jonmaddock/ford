@@ -31,6 +31,7 @@ import markdown
 import os
 import subprocess
 from datetime import date, datetime
+import pickle
 
 import ford.fortran_project
 import ford.sourceform
@@ -45,7 +46,15 @@ else:
     from StringIO import StringIO
 
 # Need to link to Process for dict creation and variable descriptions
-import create_dicts
+# Currently done by calling Process scripts
+# TODO Remove once Ford project pickling is used in Process (see export_project)
+# This is a much more robust method
+try:
+    import create_dicts
+    create_dicts_imported = True
+except ImportError:
+    print("Can't find create_dicts module in Process")
+    create_dicts_imported = False
 
 try:
     import vardes
@@ -344,10 +353,25 @@ def initialize():
     return (proj_data, proj_docs, md)
 
 def export_project(project):
-    # Output project object to make dicts and variable descriptions in Process
-    create_dicts.create_dicts(project)
+    """Export project object to make dicts and variable descriptions in Process.
+
+    :param project: Representation of project's source
+    :type project: tuple
+    """
+    # Call scripts in Process to process the Ford project object
+    # TODO Remove once pickling of Ford project object is in use on develop
+    # branch in Process
+    if create_dicts_imported:
+        create_dicts.create_dicts(project)
     if vardes_imported:
         vardes.create_vardes(project)
+
+    # Pickle the project object so it can be picked up externally later
+    # Increase recursion depth so pickling succeeds
+    sys.setrecursionlimit(3000)
+
+    with open("ford_project.pickle", "wb") as f:
+        pickle.dump(project, f)
 
 def main(proj_data,proj_docs,md):
     """
